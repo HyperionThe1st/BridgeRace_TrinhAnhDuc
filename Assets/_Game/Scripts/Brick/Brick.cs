@@ -76,7 +76,7 @@ public class Brick : MonoBehaviour
 
     public void ResetColorAfterTime()
     {
-        Invoke("Change", 3.0f);
+        Invoke("Change", 2.5f);
     }
 
     private void Change()

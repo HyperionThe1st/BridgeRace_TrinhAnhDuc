@@ -2829,10 +2829,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e50268dcffc694ea7ddb68cd327dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _charController: {fileID: 0}
+  _charController: {fileID: 2075351644}
   _animator: {fileID: 940394372}
   _mngrJoystick: {fileID: 2061621384}
-  tempPlayer: {fileID: 0}
+  tempPlayer: {fileID: 2075351643}
   movementSpeed: 0.25
   gravity: 6
 --- !u!4 &1492973747
@@ -4336,7 +4336,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 2075351646}
-  charController: {fileID: 2075351644}
 --- !u!23 &2075351647
 MeshRenderer:
   m_ObjectHideFlags: 0
