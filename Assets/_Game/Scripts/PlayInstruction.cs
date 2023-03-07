@@ -2,88 +2,85 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayInstruction : MonoBehaviour
+public class PlayInstruction : Character
 {
-    [SerializeField] private GameObject _player;
-    [SerializeField] private Renderer m_MeshRenderer;
-    private Material m_Material;
+    [SerializeField] private Character _player;  
     private Vector3 raycastDirection;
-    private BrickManager brickMng;
-    private GameObject _tempObject;
-
+    private BrickColor playerNumber = BrickColor.Black;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        m_Material = m_MeshRenderer.material;
         raycastDirection = _player.transform.forward;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        RaycastInfrontPlayer(raycastDirection);
+        //RaycastInfrontPlayer(raycastDirection);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {
-            case "NoColorBrick":
+            case Variable.NOCOLORBRICK:
                 {
                     Brick brick = other.GetComponent<Brick>();
                     if (brick != null)
                     {
-                        Material brickMaterial = BrickManager.Instance.GetBrickMaterial(brick);
-                        if (m_Material == brickMaterial)
+                        //Material brickMaterial = BrickManager.Instance.GetBrickMaterial(brick);
+                        //BrickColor temp = BrickManager.Instance.MaterialNumber(brickMaterial);
+                        //int brickNumber = BrickManager.Instance.GetColorNumber(temp);
+                        //_brickClass.ChangeSpecificBrick(brick, BrickColor.Null);
+                        //Debug.Log(playerNumber + " and " + numbTemp);
+                        BrickColor numbTemp = brick._brickColor;
+                        if (playerNumber == numbTemp)
                         {
-                            Debug.Log("equal");
+                            AddBrick(_player, brick);
+                            int count = _player.brick_count;
+                            Debug.Log(count);
                         }
+
                     }
-                    Destroy(other.gameObject);
                     break;
                 }
-            case "Enemy":
+            case Variable.PLAYER:
                 {
                     //Va cham
                     break;
                 }
-            default:
-                break;
+
+            case Variable.BRIDGESTEP:
+                {
+                    //Brick brick = other.GetComponent<Brick>();
+
+                    Player p = _player.GetComponent<Player>();
+                    Step step = other.GetComponent<Step>();
+                    if (step != null && _player.brick_count > 0)
+                    {
+                        step.Start_ChangeColor(BrickColor.Black);
+                        _player.brick_count--;
+                        Debug.Log(_player.brick_count);
+                    }
+                    else
+                    {
+                        Debug.Log("Stop");
+                        
+                    }
+
+                    break;
+                }
         }
     }
 
-    public void ObjectCompaction(GameObject other, GameObject player)
+    public void ObjectCompaction(Character player1, Character player)
     {
-        int first_player_brick = CountBrick(player);
-        int second_player_brick = CountBrick(other);
-        if (first_player_brick > second_player_brick)
-        {
-            // HitPlayer(other); (Xu li va cham --> Vang het gach)
-        }
-        else if (second_player_brick > first_player_brick)
-        {
-
-        }
-        else
-        {
-
-        }
-
     }
 
-    public int CountBrick(GameObject _gameobject)
-    {
-        int brick_count = 0;
-
-
-        return brick_count;
-    }
 
     GameObject RaycastInfrontPlayer(Vector3 RayCastDirection)
     {
-
         Vector3 startingPoint = transform.position + new Vector3(0, 0.5f, 0);
         RaycastHit hit;
         if (Physics.Raycast(
@@ -99,12 +96,4 @@ public class PlayInstruction : MonoBehaviour
             return null;
         }
     }
-
-
-
-    //public int checkBrick()
-    //{
-
-    //}
-
 }

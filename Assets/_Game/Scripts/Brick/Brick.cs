@@ -5,35 +5,32 @@ using UnityEngine;
 using UnityEngine.Scripting;
 using Random = UnityEngine.Random;
 
-public enum BrickColor
-{
-    Black = 0,
-    Blue = 1,
-    Green = 2,
-    Purple = 3,
-    Red = 4,
-    Yellow = 5
-}
+
 public class Brick : MonoBehaviour
 {
-    [SerializeField] private ColorData colorData;
-    [SerializeField] private Renderer renderer;
 
-    public BrickColor BrickColor { get; set; }
-    public Renderer Renderer { get => renderer; set => renderer = value; }
+    [SerializeField] private ColorData colorData;
+    [SerializeField] private MeshRenderer renderer;
+
+
+    public BrickColor _brickColor;
+
 
     private void Start()
     {
-        ChangeColor(GetBrickColor());
+        Start_ChangeColor(GetBrickColor());
     }
-
-    public void ChangeColor(BrickColor brickColor)
+    private void Update()
     {
-        BrickColor = brickColor;
+    }
+    public void Start_ChangeColor(BrickColor brickColor)
+    {
+
+        _brickColor = brickColor;
         renderer.material = colorData.GetMatColor(brickColor);
     }
 
-    private BrickColor GetBrickColor()
+    public BrickColor GetBrickColor()
     {
         int temp = Random.Range(0, 6);
         switch (temp)
@@ -41,34 +38,52 @@ public class Brick : MonoBehaviour
             case 0:
                 {
                     return BrickColor.Black;
-                    break;
+
                 }
             case 1:
                 {
                     return BrickColor.Blue;
-                    break;
+
                 }
             case 2:
                 {
                     return BrickColor.Green;
-                    break;
+
                 }
             case 3:
                 {
                     return BrickColor.Purple;
-                    break;
+
                 }
             case 4:
                 {
                     return BrickColor.Red;
-                    break;
+
                 }
             case 5:
                 {
                     return BrickColor.Yellow;
-                    break;
+
                 }
-                default: return BrickColor.Black;
+            default: return BrickColor.Black;
+        }
+    }
+    public void AfterHit(Brick _brick, BrickColor nullColor)
+    {
+        _brickColor = nullColor;
+        renderer.material = colorData.GetMatColor(nullColor);
+    }
+
+    public void ResetColorAfterTime()
+    {
+        Invoke("Change", 3.0f);
+    }
+
+    private void Change()
+    {
+        if (_brickColor == BrickColor.Null)
+        {
+            Start_ChangeColor(GetBrickColor());
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BrickManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class BrickManager : MonoBehaviour
     public List<Material> Materials = new List<Material>();
     private void Awake()
     {
+        Instance = this;
         for (int i = 0; i < Materials.Count; i++)
         {
             switch (i)
@@ -35,14 +37,38 @@ public class BrickManager : MonoBehaviour
         }
     }
 
-    private Renderer _renderer;
-    private Material _material;
-    public Material GetBrickMaterial(Brick brick)
+
+    //public Material GetBrickMaterial(Brick brick)
+    //{
+    //    Renderer _renderer;
+    //    Material _material;
+    //    _renderer = brick._renderer;
+    //    _material = _renderer.material;
+    //    return _material;
+    //}
+
+
+    public BrickColor MaterialNumber(Material thisMaterial)
     {
-        _renderer = brick.Renderer;
-        _material = _renderer.material;
-        Debug.Log(_material + "  mat");
-        return _material;
+
+        bool checkMaterialExist = MaterialDict.ContainsValue(thisMaterial);
+
+        if (checkMaterialExist == true)
+        {
+            return MaterialDict.FirstOrDefault(x => x.Value == thisMaterial).Key;
+        }
+        else
+        {
+            return BrickColor.Null;
+        }
+    }
+
+    public int GetColorNumber(BrickColor _brickColor)
+    {
+        int temp = 7;
+        BrickColor bc = _brickColor;
+        temp = (int)bc;
+        return temp;
     }
 
 }

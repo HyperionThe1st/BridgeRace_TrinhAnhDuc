@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Character
+public class Player : MonoBehaviour
 {
     //Component:
 
     [SerializeField] private CharacterController _charController;
     [SerializeField] private Animator _animator;
     [SerializeField] private Joystick _mngrJoystick;
-
+    [SerializeField] private GameObject tempPlayer;
 
     //Transform:
     private Transform meshPlayer;
@@ -25,11 +25,11 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
-        GameObject tempPlayer = GameObject.FindGameObjectWithTag("Player");
+        
         _charController = tempPlayer.GetComponent<CharacterController>();
         meshPlayer = tempPlayer.transform.GetChild(0);
         _animator = meshPlayer.GetComponent<Animator>();
-        _mngrJoystick = GameObject.Find("imgJoystickBg").GetComponent<Joystick>();
+        _mngrJoystick = GameObject.Find(Variable.IMGJOYSTICKBACKGROUND).GetComponent<Joystick>();
     }
 
     // Update is called once per frame
@@ -39,11 +39,11 @@ public class Player : Character
         inputZ = _mngrJoystick.InputVertical();
         if (inputX == 0 && inputZ == 0)
         {
-            _animator.SetBool("isRunning", false);
+            _animator.SetBool(Variable.ISRUNNING, false);
         }
         else
         {
-            _animator.SetBool("isRunning", true);
+            _animator.SetBool(Variable.ISRUNNING, true);
         }
 
 
@@ -67,6 +67,7 @@ public class Player : Character
         //movement:
         v_movement = new Vector3(inputX * movementSpeed, tempY, inputZ * movementSpeed);
         _charController.Move(v_movement);
+        
 
         //mesh rotate:
         if (inputX != 0 || inputZ != 0)
@@ -75,5 +76,10 @@ public class Player : Character
             meshPlayer.rotation = Quaternion.LookRotation(lookDir);
         }
 
+    }
+
+    public void Stop()
+    {
+        _charController.Move(Vector3.zero);
     }
 }
