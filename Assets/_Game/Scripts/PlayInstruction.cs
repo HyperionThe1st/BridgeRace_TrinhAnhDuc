@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlayInstruction : Character
 {
-    [SerializeField] private Character _player;  
+    [SerializeField] private Character _char;
+    [SerializeField] private Player _player;
+
     private Vector3 raycastDirection;
     private BrickColor playerNumber = BrickColor.Black;
-
+    public bool isRun = true;
     // Start is called before the first frame update
     void Awake()
     {
-        raycastDirection = _player.transform.forward;
+        raycastDirection = _char.transform.forward;
     }
 
     // Update is called once per frame
@@ -37,11 +39,9 @@ public class PlayInstruction : Character
                         BrickColor numbTemp = brick._brickColor;
                         if (playerNumber == numbTemp)
                         {
-                            AddBrick(_player, brick);
-                            int count = _player.brick_count;
-                            Debug.Log(count);
+                            AddBrick(_char, brick);
+                            int count = _char.brick_count;
                         }
-
                     }
                     break;
                 }
@@ -50,35 +50,30 @@ public class PlayInstruction : Character
                     //Va cham
                     break;
                 }
-
             case Variable.BRIDGESTEP:
                 {
-                    //Brick brick = other.GetComponent<Brick>();
-
-                    Player p = _player.GetComponent<Player>();
                     Step step = other.GetComponent<Step>();
-                    if (step != null && _player.brick_count > 0)
+                    BoxCollider bcl = step.GetComponent<BoxCollider>();
+                    if (step._brickColor != player_number && _char.brick_count > 0)
                     {
-                        step.Start_ChangeColor(BrickColor.Black);
-                        _player.brick_count--;
-                        Debug.Log(_player.brick_count);
-                    }
-                    else
-                    {
-                        Debug.Log("Stop");
-                        
-                    }
+                        ReleaseBrick(_char, step);
 
+                    }
+                    else if (step._brickColor != player_number && _char.brick_count == 0)
+                    {
+                        _player.Stop();
+                    }
+                    else if (step._brickColor==player_number)
+                    {
+                        _player.NotStop();
+                    }
                     break;
                 }
         }
     }
-
     public void ObjectCompaction(Character player1, Character player)
     {
     }
-
-
     GameObject RaycastInfrontPlayer(Vector3 RayCastDirection)
     {
         Vector3 startingPoint = transform.position + new Vector3(0, 0.5f, 0);
@@ -96,4 +91,9 @@ public class PlayInstruction : Character
             return null;
         }
     }
+    public bool GetState()
+    {
+        return isRun;
+    }
+
 }
