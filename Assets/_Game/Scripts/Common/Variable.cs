@@ -12,4 +12,5 @@ public class Variable : MonoBehaviour
     public const string BRIDGESTEP = "BridgeStep";
     public const float BRICKHEIGHT = 0.4f;
     public const float MOVEMENTSPEED = 0.25f;
+    public const string FLOOR2 = "Floor2";
 }

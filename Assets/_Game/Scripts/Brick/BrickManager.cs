@@ -37,17 +37,6 @@ public class BrickManager : MonoBehaviour
         }
     }
 
-
-    //public Material GetBrickMaterial(Brick brick)
-    //{
-    //    Renderer _renderer;
-    //    Material _material;
-    //    _renderer = brick._renderer;
-    //    _material = _renderer.material;
-    //    return _material;
-    //}
-
-
     public BrickColor MaterialNumber(Material thisMaterial)
     {
 

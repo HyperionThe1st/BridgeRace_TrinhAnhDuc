@@ -10,11 +10,14 @@ public class Character : MonoBehaviour
     //Thuoc tinh"
     public int brick_count { get; set; }
     [SerializeField] public BrickColor player_number;
-    public int floor_number { get; set; }
+    public int floor_number = 1;
+    private PlatformController floor;
     private BrickColor objectColor;
     Stack<GameObject> collectedBricks;
 
-
+    private void Awake()
+    {
+    }
     private void Start()
     {
         collectedBricks = new Stack<GameObject>();
@@ -23,7 +26,7 @@ public class Character : MonoBehaviour
     {
         character.brick_count += 1;
         _brick.Start_ChangeColor(BrickColor.Null);
-        _brick.ResetColorAfterTime();
+        _brick.ResetColorAfterTime(1);
         Vector3 brickPos = character.transform.GetChild(1).position;
         // Instantiate(brickPrefabs, new Vector3(brickPos.x, brickPos.y + character.brick_count * Variable.BRICKHEIGHT, brickPos.z),Quaternion.identity,character.transform.GetChild(1));
         GameObject go = Instantiate(brickPrefabs, new Vector3(brickPos.x, brickPos.y + character.brick_count * Variable.BRICKHEIGHT, brickPos.z), Quaternion.identity, character.transform.GetChild(1));
@@ -37,10 +40,10 @@ public class Character : MonoBehaviour
         step.Start_ChangeColor(character.player_number);
         character.brick_count -= 1;
         Destroy(collectedBricks.Pop());
-
-
     }
 
+    public void ChangeFloor()
+    {
 
-
+    }
 }

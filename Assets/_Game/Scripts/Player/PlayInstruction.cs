@@ -8,7 +8,6 @@ public class PlayInstruction : Character
     [SerializeField] private Player _player;
 
     private Vector3 raycastDirection;
-    private BrickColor playerNumber = BrickColor.Black;
     public bool isRun = true;
     // Start is called before the first frame update
     void Awake()
@@ -31,23 +30,13 @@ public class PlayInstruction : Character
                     Brick brick = other.GetComponent<Brick>();
                     if (brick != null)
                     {
-                        //Material brickMaterial = BrickManager.Instance.GetBrickMaterial(brick);
-                        //BrickColor temp = BrickManager.Instance.MaterialNumber(brickMaterial);
-                        //int brickNumber = BrickManager.Instance.GetColorNumber(temp);
-                        //_brickClass.ChangeSpecificBrick(brick, BrickColor.Null);
-                        //Debug.Log(playerNumber + " and " + numbTemp);
                         BrickColor numbTemp = brick._brickColor;
-                        if (playerNumber == numbTemp)
+                        if (player_number == numbTemp)
                         {
                             AddBrick(_char, brick);
                             int count = _char.brick_count;
                         }
                     }
-                    break;
-                }
-            case Variable.PLAYER:
-                {
-                    //Va cham
                     break;
                 }
             case Variable.BRIDGESTEP:
@@ -63,12 +52,20 @@ public class PlayInstruction : Character
                     {
                         _player.Stop();
                     }
-                    else if (step._brickColor==player_number)
+                    else if (step._brickColor == player_number)
                     {
                         _player.NotStop();
                     }
                     break;
                 }
+            case Variable.FLOOR2:
+                {
+                    PlatformController pc = other.transform.parent.GetComponent<PlatformController>();
+                    Debug.Log(pc);
+                    pc.platformColorList.Add(player_number);
+                    break;
+                }
+
         }
     }
     public void ObjectCompaction(Character player1, Character player)

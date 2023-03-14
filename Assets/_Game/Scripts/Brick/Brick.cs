@@ -11,17 +11,22 @@ public class Brick : MonoBehaviour
 
     [SerializeField] private ColorData colorData;
     [SerializeField] private MeshRenderer renderer;
-
+    private List<BrickColor> brickColorList;
 
     public BrickColor _brickColor;
-
-
+    [SerializeField] private PlatformController pc;
     private void Start()
     {
-        Start_ChangeColor(GetBrickColor());
+        brickColorList = new List<BrickColor>(pc.platformColorList);
+        Start_ChangeColor(RandomColor(brickColorList));
     }
     private void Update()
     {
+        if (_brickColor==BrickColor.Null)
+        {
+            Start_ChangeColor(RandomColor(brickColorList));
+        }
+        brickColorList = new List<BrickColor>(pc.platformColorList);
     }
     public void Start_ChangeColor(BrickColor brickColor)
     {
@@ -74,16 +79,48 @@ public class Brick : MonoBehaviour
         renderer.material = colorData.GetMatColor(nullColor);
     }
 
-    public void ResetColorAfterTime()
+    public void ResetColorAfterTime(int a)
     {
-        Invoke("Change", 2.5f);
+        if (a==1)
+        {
+            Invoke("Change", 3.5f);
+        } else if (a==2)
+        {
+            Invoke("StayChange",5.0f);
+        }
+        
+    }
+
+    public void StayChange()
+    {
+        if (_brickColor==BrickColor.Null)
+        {
+            Start_ChangeColor(RandomColor(brickColorList));
+        }
+        
     }
 
     private void Change()
     {
         if (_brickColor == BrickColor.Null)
         {
-            Start_ChangeColor(GetBrickColor());
+            Start_ChangeColor(RandomColor(brickColorList));
+        }
+    }
+    public BrickColor RandomColor(List<BrickColor> lists)
+    {
+        BrickColor c;
+        int a = Random.Range(0,lists.Count);
+        c = lists[a];
+        return c;
+    }
+
+    public void GetFatherColor(List<BrickColor> f_list, List<BrickColor> s_list)
+    {
+        f_list.Clear();
+        foreach (BrickColor c in s_list)
+        {
+            f_list.Add(c);
         }
     }
 

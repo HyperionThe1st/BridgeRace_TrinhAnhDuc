@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7591614320449633968}
   - component: {fileID: 7591614320449633971}
   - component: {fileID: 7591614320449633970}
-  - component: {fileID: 4303744478919191002}
+  - component: {fileID: 648311247379423694}
   m_Layer: 0
   m_Name: Step
   m_TagString: BridgeStep
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4303744478919191002
+--- !u!114 &648311247379423694
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,4 +110,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorData: {fileID: 11400000, guid: c98a615b46116004cb906f0098fc4cc5, type: 2}
   renderer: {fileID: 7591614320449633971}
-  _brickColor: 2
+  _brickColor: 0
+  pc: {fileID: 0}
