@@ -31,7 +31,6 @@ public class PlatformController : MonoBehaviour
         {      
             if (c.floor_number == floorNumber && CheckExistElement((int)c.player_number, colorList) == false)
             {
-
                 BrickColor temp = c.player_number;
                 colorList.Add(temp);
             }

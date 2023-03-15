@@ -28,7 +28,6 @@ public class Character : MonoBehaviour
         _brick.Start_ChangeColor(BrickColor.Null);
         _brick.ResetColorAfterTime(1);
         Vector3 brickPos = character.transform.GetChild(1).position;
-        // Instantiate(brickPrefabs, new Vector3(brickPos.x, brickPos.y + character.brick_count * Variable.BRICKHEIGHT, brickPos.z),Quaternion.identity,character.transform.GetChild(1));
         GameObject go = Instantiate(brickPrefabs, new Vector3(brickPos.x, brickPos.y + character.brick_count * Variable.BRICKHEIGHT, brickPos.z), Quaternion.identity, character.transform.GetChild(1));
         collectedBricks.Push(go);
 

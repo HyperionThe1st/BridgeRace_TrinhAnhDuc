@@ -6,6 +6,9 @@ TagManager:
   tags:
   - NoColorBrick
   - BridgeStep
+  - Floor2
+  - Floor1
+  - Floor3
   layers:
   - Default
   - TransparentFX

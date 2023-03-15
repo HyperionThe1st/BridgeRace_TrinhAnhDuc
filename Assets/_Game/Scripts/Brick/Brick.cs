@@ -24,7 +24,7 @@ public class Brick : MonoBehaviour
     {
         if (_brickColor==BrickColor.Null)
         {
-            Start_ChangeColor(RandomColor(brickColorList));
+            ResetColorAfterTime(1);
         }
         brickColorList = new List<BrickColor>(pc.platformColorList);
     }
@@ -86,7 +86,7 @@ public class Brick : MonoBehaviour
             Invoke("Change", 3.5f);
         } else if (a==2)
         {
-            Invoke("StayChange",5.0f);
+            Invoke("StayChange",10.0f);
         }
         
     }
