@@ -32,7 +32,6 @@ public class Character : MonoBehaviour
         collectedBricks.Push(go);
 
     }
-
     public void ReleaseBrick(Character character, Step step)
     {
         int brickNumberNow = character.brick_count;

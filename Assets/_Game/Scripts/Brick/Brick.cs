@@ -15,18 +15,27 @@ public class Brick : MonoBehaviour
 
     public BrickColor _brickColor;
     [SerializeField] private PlatformController pc;
+    private float timer;
+    private float randomTime;
+    private int changeTime;
     private void Start()
     {
         brickColorList = new List<BrickColor>(pc.platformColorList);
         Start_ChangeColor(RandomColor(brickColorList));
+        timer = 0;
+        GetRandomTime();
     }
     private void Update()
     {
-        if (_brickColor==BrickColor.Null)
-        {
-            ResetColorAfterTime(1);
-        }
         brickColorList = new List<BrickColor>(pc.platformColorList);
+        timer += Time.deltaTime;
+        
+        if (_brickColor == BrickColor.Null && timer > randomTime)
+        {
+            Start_ChangeColor(RandomColor(brickColorList));
+            GetRandomTime();
+            timer = 0;
+        }
     }
     public void Start_ChangeColor(BrickColor brickColor)
     {
@@ -80,23 +89,24 @@ public class Brick : MonoBehaviour
 
     public void ResetColorAfterTime(int a)
     {
-        if (a==1)
+        if (a == 1)
         {
             Invoke("Change", 3.5f);
-        } else if (a==2)
-        {
-            Invoke("StayChange",10.0f);
         }
-        
+        else if (a == 2)
+        {
+            Invoke("StayChange", 10.0f);
+        }
+
     }
 
     public void StayChange()
     {
-        if (_brickColor==BrickColor.Null)
+        if (_brickColor == BrickColor.Null)
         {
             Start_ChangeColor(RandomColor(brickColorList));
         }
-        
+
     }
 
     private void Change()
@@ -109,7 +119,7 @@ public class Brick : MonoBehaviour
     public BrickColor RandomColor(List<BrickColor> lists)
     {
         BrickColor c;
-        int a = Random.Range(0,lists.Count);
+        int a = Random.Range(0, lists.Count);
         c = lists[a];
         return c;
     }
@@ -123,4 +133,25 @@ public class Brick : MonoBehaviour
         }
     }
 
+    private void GetRandomTime()
+    {
+        randomTime = Random.Range(5, 12);
+    }
+
+    private void StopChangeColor()
+    {
+        int check = 0;
+        foreach (BrickColor bc in brickColorList)
+        {
+            if (bc==_brickColor)
+            {
+                check++;
+            }
+        }
+        if (check==0)
+        {
+
+        }
+
+    }
 }

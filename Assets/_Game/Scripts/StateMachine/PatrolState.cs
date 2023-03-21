@@ -28,7 +28,7 @@ public class PatrolState : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Bot _bot = animator.GetComponent<Bot>();
-        getBrick();
+        getBrick(); 
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
             agent.SetDestination(listBricks[Random.Range(0, listBricks.Count)].transform.position);

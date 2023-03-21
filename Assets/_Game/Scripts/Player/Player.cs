@@ -94,6 +94,8 @@ public class Player : MonoBehaviour
         {
             Vector3 lookDir = new Vector3(v_movement.x, 0, v_movement.z);
             meshPlayer.rotation = Quaternion.LookRotation(lookDir);
+            gameObject.transform.rotation = Quaternion.LookRotation(lookDir);
+
         }
     }
 
