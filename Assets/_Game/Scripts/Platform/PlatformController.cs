@@ -15,7 +15,6 @@ public class PlatformController : MonoBehaviour
     //private List<BrickColor> allColor;
     private void Awake()
     {
-        
         List<BrickColor> temp = GetListColor(characterList);
         platformColorList = new List<BrickColor>(temp);
         platformColorList.Add(BrickColor.Null);

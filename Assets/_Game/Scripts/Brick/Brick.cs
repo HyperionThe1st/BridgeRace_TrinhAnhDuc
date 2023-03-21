@@ -30,7 +30,6 @@ public class Brick : MonoBehaviour
     }
     public void Start_ChangeColor(BrickColor brickColor)
     {
-
         _brickColor = brickColor;
         renderer.material = colorData.GetMatColor(brickColor);
     }

@@ -6,9 +6,11 @@ public class PlayInstruction : Character
 {
     [SerializeField] private Character _char;
     [SerializeField] private Player _player;
-
+    [SerializeField] private UIManager ui;
     private Vector3 raycastDirection;
     public bool isRun = true;
+
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -58,14 +60,20 @@ public class PlayInstruction : Character
                     }
                     break;
                 }
-            case Variable.FLOOR2:
+            case Variable.TRIGGERFLOOR2:
                 {
                     PlatformController pc = other.transform.parent.GetComponent<PlatformController>();
-                    Debug.Log(pc);
                     pc.platformColorList.Add(player_number);
                     break;
                 }
-
+            case Variable.FINISHLINE:
+                {
+                    Debug.Log("Finish");
+                    ui.ShowWinPopUp(true);
+                    ui.ShowJoyStickPopUp(false);
+                    _player.Stop();
+                    break;
+                }
         }
     }
     public void ObjectCompaction(Character player1, Character player)

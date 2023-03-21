@@ -2,22 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Bot : Character
 {
-    [SerializeField]private Character _char;
+    [SerializeField] private Character _char;
     private void Awake()
     {
 
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit1");
         switch (other.tag)
         {
             case Variable.NOCOLORBRICK:
                 {
-                    Debug.Log("Hit2");
                     Brick brick = other.GetComponent<Brick>();
                     if (brick != null)
                     {
@@ -30,7 +29,32 @@ public class Bot : Character
                     }
                     break;
                 }
-        } 
+            case Variable.TRIGGERFLOOR2:
+                {
+                    PlatformController pc = other.transform.parent.GetComponent<PlatformController>();
+                    pc.platformColorList.Add(player_number);
+                    break;
+                }
+            case Variable.BRIDGESTEP:
+                {
+                    Step step = other.GetComponent<Step>();
+                    BoxCollider bcl = step.GetComponent<BoxCollider>();
+                    if (step._brickColor != player_number && _char.brick_count > 0)
+                    {
+                        ReleaseBrick(_char, step);
+
+                    }
+                    else if (step._brickColor != player_number && _char.brick_count == 0)
+                    {
+                        
+                    }
+                    else if (step._brickColor == player_number)
+                    {
+                       
+                    }
+                    break;
+                }
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -39,7 +63,7 @@ public class Bot : Character
         {
             case Variable.NOCOLORBRICK:
                 {
-                    
+
                     Brick brick = collision.gameObject.GetComponent<Brick>();
                     if (brick != null)
                     {

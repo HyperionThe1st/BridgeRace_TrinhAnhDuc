@@ -9,6 +9,7 @@ TagManager:
   - Floor2
   - Floor1
   - Floor3
+  - Trigger2
   layers:
   - Default
   - TransparentFX

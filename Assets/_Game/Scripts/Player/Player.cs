@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //Component:
-
     [SerializeField] private CharacterController _charController;
     [SerializeField] private Animator _animator;
     [SerializeField] private Joystick _mngrJoystick;
@@ -65,7 +64,7 @@ public class Player : MonoBehaviour
         tempY = v_movement.y;
         //movement:
 
-       
+
 
         if (movementSpeed > 0)
         {
@@ -100,7 +99,6 @@ public class Player : MonoBehaviour
 
     public void Stop()
     {
-        Debug.Log("In Stop");
         movementSpeed = 0;
     }
     public void NotStop()

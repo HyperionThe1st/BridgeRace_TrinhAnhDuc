@@ -9,16 +9,15 @@ public class PatrolState : StateMachineBehaviour
     float timer;
     PlatformController platCTRL;
     List<Brick> listBricks = new List<Brick>();
-    string currentFloor = "Floor1";
+    string currentFloor;
     NavMeshAgent agent;
     BrickColor botColor;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //Bot _bot = animator.GetComponentInParent<Bot>();
+        currentFloor = Variable.FIRSTFLOOR;
         Bot _bot = animator.GetComponent<Bot>();
         botColor = _bot.player_number;
-        Debug.Log(botColor);
         agent = animator.GetComponent<NavMeshAgent>();
         timer = 0;
         getBrick();
@@ -28,10 +27,16 @@ public class PatrolState : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Bot _bot = animator.GetComponent<Bot>();
         getBrick();
-        if (agent.remainingDistance<=agent.stoppingDistance)
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
             agent.SetDestination(listBricks[Random.Range(0, listBricks.Count)].transform.position);
+        }
+
+        if (_bot.brick_count == Random.Range(3, 7))
+        {
+
         }
         timer += Time.deltaTime;
         if (timer > 10)
@@ -44,7 +49,6 @@ public class PatrolState : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent.SetDestination(agent.transform.position);
-        
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
